@@ -42,7 +42,7 @@ This call creates a new project within the Pointivo API.
 
 The fields shown in the POST call are all optional, but recommended.   If provided the **statusCallbackUrl** will be called by the Pointivo API when the project transitions into a completed state.   Currently supported callback mechanisms are HTTP/HTTPS urls, and Amazon SNS arns.
 
-*POST* /v2/projects
+**POST** /v2/projects
 
 .. code-block:: javascript
 
@@ -69,13 +69,41 @@ The response will include the newly created project, including its assigned id. 
         }
     }
 
+.. _getprojectlabel:
+
+--------------
+Get project
+--------------
+
+Project data can be retrieved using a GET request :
+
+**GET** /v2/projects/{projectId}
+
+The response will include the current project data :
+
+.. code-block:: javascript
+
+    {
+        "success": true,
+        "message": null,
+        "data": {
+            "id": 1234,
+            "name": "Project Name",
+            "description": "Description",
+            "statusCallbackUrl": "http://callback.url",
+            "status": "CREATED",
+            "resourceStatus": "OK"
+        }
+    }
+
+
 --------------
 Update project
 --------------
 
 Project data can be updated using this API method.    Only the fields shown below may be modified.
 
-*PUT* /v2/projects/{projectId}
+**PUT** /v2/projects/{projectId}
 
 .. code-block:: javascript
 
@@ -129,7 +157,7 @@ This call creates a new resource within the Pointivo API.
 
 The only required field in the create resource endpoint is **resourceType**.
 
-*POST* /v2/projects/{projectId}/resources
+**POST** /v2/projects/{projectId}/resources
 
 .. code-block:: javascript
 
@@ -156,7 +184,7 @@ The response will include the newly created resource, including its assigned id.
         "uploadUrl": "https://upload.here"
     }
 
-The response includes a field named **uploadUrl**.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_
+The response includes a field named **uploadUrl**.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
 
 
 ===================
@@ -165,9 +193,24 @@ Wireframe Detection
 
 The Pointivo API supports automatic wireframe detection for structures in point clouds.   Wireframe detection requires that a project have three input resources created and uploaded :
 
-* **Frame/Image Archive** (zip, rar)
-* **Point Cloud** (ply, las)
-* **Camera View Definitions** (Pix4D, Agisoft)
+* **1 - Frame/Image Archive** (zip, rar)
+* **12 - Point Cloud** (ply, las)
+* **94 - Camera View Definitions** (Pix4D, Agisoft)
+
+
+The wireframe detection request must include the resource ids for all three resources.
+
+**POST** /v2/projects/{projectId}/wireframe
+
+.. code-block:: javascript
+
+    {
+        "frameZipResourceId": 1001,
+        "pointCloudResourceId": 1002,
+        "cameraViewResourceId": 1003
+    }
+
+Once submitted, processing will begin immediately.   Project status can be obtained by querying the `Get project`_ API endpoint.
 
 
 
@@ -175,4 +218,7 @@ The Pointivo API supports automatic wireframe detection for structures in point 
 =================
 Callbacks
 =================
-Callbacks
+
+If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETED_INITIAL** or **COMPLETED**.   The callback body includes the current project data and a list of resources available for the project :
+
+
