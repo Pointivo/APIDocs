@@ -10,7 +10,12 @@ Welcome to Pointivo API's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   guide
+   reference
 
+
+
+This document provides official documentation for the Pointivo API.
 
 Indices and tables
 ==================

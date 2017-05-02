@@ -22,6 +22,7 @@
 
 import sphinx_rtd_theme
 
+html_favicon='pointivo-favicon.ico'
 
 # -- General configuration ------------------------------------------------
 
