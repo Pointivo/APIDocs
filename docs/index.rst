@@ -10,7 +10,6 @@ Welcome to Pointivo API's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   guide
    reference
 
 

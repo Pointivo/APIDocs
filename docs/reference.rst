@@ -221,4 +221,27 @@ Callbacks
 
 If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETED_INITIAL** or **COMPLETED**.   The callback body includes the current project data and a list of resources available for the project :
 
+.. code-block:: javascript
 
+    {
+      "project" : {
+        "id" : 5847,
+        "name" : "Project Name",
+        "description" : "Project Description",
+        "statusCallbackUrl" : "https://callback.url",
+        "resourceStatus" : "OK",
+        "status" : "COMPLETE_INITIAL"
+      },
+      "resources" : [ {
+        "id" : 27071,
+        "name" : "GEOJSON",
+        "description" : "",
+        "size" : 32438,
+        "resourceType" : {
+          "id" : 96,
+          "name" : "GEOJSON"
+        },
+        "downloadUrl" : "https://resource.download.url",
+        "status" : "OK"
+      } ]
+    }
