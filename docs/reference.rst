@@ -33,9 +33,10 @@ Projects have a field named **status** that can have one of the following values
 * **COMPLETE_INITIAL** - Project is processing, but initial outputs are available
 * **COMPLETE** - Project is complete, and no further outputs will be generated
 
+Projects also have a field **resourceStatus**, which indicates the most severe problem detected with Resources associated with the Project.   See `Resource Status`_ for further informaiton.
 
 --------------
-Create project
+Create Project
 --------------
 
 This call creates a new project within the Pointivo API.
@@ -72,7 +73,7 @@ The response will include the newly created project, including its assigned id. 
 .. _getprojectlabel:
 
 --------------
-Get project
+Get Project
 --------------
 
 Project data can be retrieved using a GET request :
@@ -98,7 +99,7 @@ The response will include the current project data :
 
 
 --------------
-Update project
+Update Project
 --------------
 
 Project data can be updated using this API method.    Only the fields shown below may be modified.
@@ -140,6 +141,20 @@ Resources are used to represent file content in the Pointivo API.    A resource 
 
 Once an input resource is defined on a project, the file content may then be uploaded.    The response to the resource create API call includes a temporary URL for the file upload.
 
+-----------------
+Resource Status
+-----------------
+
+Resources have a **status** field which indicates whether the file content was usable during processing.   The **status** field can have the following values :
+
+* **OK** - There were no issues processing the resource
+* **PROBLEM** - A problem with the resource was detected, but the system was able to continue processing
+* **UNUSABLE** - The system was unable to process the resource, and the system was unable to continue processing
+
+-----------------
+Resource Types
+-----------------
+
 The Pointivo API handles a defined set of resource types, each given a unique numeric identifier.
 
 * **1  - Frame/Image Archive** (zip, rar)
@@ -148,9 +163,8 @@ The Pointivo API handles a defined set of resource types, each given a unique nu
 * **96 - GEOJSON**
 * **97 - DXF**
 
-
 -----------------
-Create resource
+Create Resource
 -----------------
 
 This call creates a new resource within the Pointivo API.
@@ -165,6 +179,7 @@ The only required field in the create resource endpoint is **resourceType**.
         "name": "Pointcloud Resource",
         "description": "Description"
         "resourceType": { id: 12 } // Point Cloud resource type
+        "metaData": {} // optional resource metadata
     }
 
 The response will include the newly created resource, including its assigned id.  This resource id will be needed for all subsequent API calls which reference this resource.
@@ -179,6 +194,7 @@ The response will include the newly created resource, including its assigned id.
             "name": "Pointcloud Resource",
             "description": "Description",
             "resourceType": { id: 12 },
+            "metaData": {},
             "status": "OK",
         },
         "uploadUrl": "https://upload.here"
@@ -186,10 +202,48 @@ The response will include the newly created resource, including its assigned id.
 
 The response includes a field named **uploadUrl**.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
 
+-----------------
+Get Resources
+-----------------
 
-===================
-Wireframe Detection
-===================
+This call returns all resources associated with a project.
+
+
+**GET** /v2/projects/{projectId}/resources
+
+Response :
+
+.. code-block:: javascript
+
+    {
+        "success": true,
+        "message": null,
+        "data": [
+            {
+                "id": 2345,
+                "name": "Pointcloud Resource",
+                "description": "",
+                "resourceType": { id: 12 },
+                "metaData": {},
+                "status": "OK"
+            },
+            {
+                "id": 2346,
+                "name": "FrameZip Resource",
+                "description": "",
+                "resourceType": { id: 1 },
+                "metaData": {},
+                "status": "OK"
+            }
+        ]
+    }
+
+The response includes a field named **uploadUrl**.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
+
+
+====================
+Wireframe Generation
+====================
 
 The Pointivo API supports automatic wireframe detection for structures in point clouds.   Wireframe detection requires that a project have three input resources created and uploaded :
 
@@ -210,7 +264,7 @@ The wireframe detection request must include the resource ids for all three reso
         "cameraViewResourceId": 1003
     }
 
-Once submitted, processing will begin immediately.   Project status can be obtained by querying the `Get project`_ API endpoint.
+Once submitted, processing will begin immediately.   Project status can be obtained by querying the `Get Project`_ API endpoint.
 
 
 
@@ -224,24 +278,27 @@ If a callback is defined for a project, the callback will be invoked once the pr
 .. code-block:: javascript
 
     {
-      "project" : {
-        "id" : 5847,
-        "name" : "Project Name",
-        "description" : "Project Description",
-        "statusCallbackUrl" : "https://callback.url",
-        "resourceStatus" : "OK",
-        "status" : "COMPLETE_INITIAL"
+      "project": {
+        "id": 5847,
+        "name": "Project Name",
+        "description": "Project Description",
+        "statusCallbackUrl": "https://callback.url",
+        "resourceStatus": "OK",
+        "status": "COMPLETE_INITIAL"
       },
-      "resources" : [ {
-        "id" : 27071,
-        "name" : "GEOJSON",
-        "description" : "",
-        "size" : 32438,
-        "resourceType" : {
-          "id" : 96,
-          "name" : "GEOJSON"
-        },
-        "downloadUrl" : "https://resource.download.url",
-        "status" : "OK"
-      } ]
+      "resources": [
+        {
+          "id": 27071,
+          "name": "GEOJSON",
+          "description": "",
+          "size": 32438,
+          "resourceType": {
+            "id": 96,
+            "name": "GEOJSON"
+          },
+          "metaData": {},
+          "downloadUrl": "https://resource.download.url",
+          "status": "OK"
+        }
+      ]
     }
