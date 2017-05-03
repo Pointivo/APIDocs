@@ -11,6 +11,7 @@ All requests to the Pointivo API must include a request header named **authoriza
 All responses from the Pointivo API include a common set of fields indicating the status and success of the request:
 
 .. code-block:: javascript
+    :caption: API Response
 
     {
         "success": true, // indicates success or failure of the request
@@ -46,6 +47,7 @@ The fields shown in the POST call are all optional, but recommended.   If provid
 **POST** /v2/projects
 
 .. code-block:: javascript
+    :caption: API Request
 
     {
         "name": "Project Name",
@@ -56,6 +58,7 @@ The fields shown in the POST call are all optional, but recommended.   If provid
 The response will include the newly created project, including its assigned id.  This project id will be needed for all subsequent API calls which reference this project.
 
 .. code-block:: javascript
+    :caption: API Response
 
     {
         "success": true,
@@ -83,6 +86,7 @@ Project data can be retrieved using a GET request :
 The response will include the current project data :
 
 .. code-block:: javascript
+    :caption: API Response
 
     {
         "success": true,
@@ -107,6 +111,7 @@ Project data can be updated using this API method.    Only the fields shown belo
 **PUT** /v2/projects/{projectId}
 
 .. code-block:: javascript
+    :caption: API Request
 
     {
         "id": 1234,
@@ -118,6 +123,7 @@ Project data can be updated using this API method.    Only the fields shown belo
 The response will return the modified project data :
 
 .. code-block:: javascript
+    :caption: API Response
 
     {
         "success": true,
@@ -174,6 +180,7 @@ The only required field in the create resource endpoint is **resourceType**.
 **POST** /v2/projects/{projectId}/resources
 
 .. code-block:: javascript
+    :caption: API Request
 
     {
         "name": "Pointcloud Resource",
@@ -185,6 +192,7 @@ The only required field in the create resource endpoint is **resourceType**.
 The response will include the newly created resource, including its assigned id.  This resource id will be needed for all subsequent API calls which reference this resource.
 
 .. code-block:: javascript
+    :caption: API Response
 
     {
         "success": true,
@@ -214,6 +222,7 @@ This call returns all resources associated with a project.
 Response :
 
 .. code-block:: javascript
+    :caption: API Response
 
     {
         "success": true,
@@ -257,7 +266,7 @@ The wireframe detection request must include the resource ids for all three reso
 **POST** /v2/projects/{projectId}/wireframe
 
 .. code-block:: javascript
-
+    :caption: API Request
     {
         "frameZipResourceId": 1001,
         "pointCloudResourceId": 1002,
@@ -276,6 +285,7 @@ Callbacks
 If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETED_INITIAL** or **COMPLETED**.   The callback body includes the current project data and a list of resources available for the project :
 
 .. code-block:: javascript
+    :caption: Callback POST body
 
     {
       "project": {
