@@ -8,12 +8,12 @@ The base URL for all API requests is **https://api.pointivo.com/**
 
 All requests to the Pointivo API must include a request header named **authorization** containing a valid API authorization token.
 
-All responses from the Pointivo API have a common set of fields indicating the status and success of the request:
+All responses from the Pointivo API include a common set of fields indicating the status and success of the request:
 
 .. code-block:: javascript
 
     {
-        "success": true,
+        "success": true, // indicates success or failure of the request
         "message": "", // additional detail, if available
         "data": { } // request-specific response data
     }
