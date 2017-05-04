@@ -20,6 +20,13 @@ All responses from the Pointivo API include a common set of fields indicating th
     }
 
 
+.. graphviz::
+
+   digraph {
+      "From" -> "To";
+   }
+
+
 
 =================
 Projects
@@ -202,13 +209,16 @@ The response will include the newly created resource, including its assigned id.
             "name": "Pointcloud Resource",
             "description": "Description",
             "resourceType": { id: 12 },
+            "flowType": "IN",
             "metaData": {},
             "status": "OK",
         },
         "uploadUrl": "https://upload.here"
     }
 
-The response includes a field named **uploadUrl**.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
+The **uploadUrl** field is a temporary URL for uploads.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
+
+The **flowType** field indicates the resource was provided to the API, or produced by the API.   Possible values are **IN** and **OUT** respectively.
 
 -----------------
 Get Resources
@@ -233,22 +243,25 @@ Response :
                 "name": "Pointcloud Resource",
                 "description": "",
                 "resourceType": { id: 12 },
+                "flowType": "IN",
                 "metaData": {},
-                "status": "OK"
+                "status": "OK",
+                "downloadUrl": "https://download.url"
             },
             {
                 "id": 2346,
-                "name": "FrameZip Resource",
+                "name": "GEOJSON",
                 "description": "",
-                "resourceType": { id: 1 },
+                "resourceType": { id: 96 },
+                "flowType": "OUT",
                 "metaData": {},
-                "status": "OK"
+                "status": "OK",
+                "downloadUrl": "https://download.url"
             }
         ]
     }
 
-The response includes a field named **uploadUrl**.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
-
+The **downloadUrl** field is a temporary URL provided to download the file content associated with each resource.
 
 ====================
 Wireframe Generation
@@ -267,6 +280,7 @@ The wireframe detection request must include the resource ids for all three reso
 
 .. code-block:: javascript
     :caption: API Request
+
     {
         "frameZipResourceId": 1001,
         "pointCloudResourceId": 1002,
