@@ -1,6 +1,6 @@
 
 
-
+========================================
 Public API Reference
 ========================================
 
@@ -18,16 +18,18 @@ Pointivo API interaction will generally follow this sequence :
 	node [shape = box, href="#create-project"]; "Create Project";
     node [shape = box, href="#create-resource"]; "Create Resources";
     node [shape = box, href="#wireframe-generation"]; "Submit Request";
-    node [shape = box, href="#get-project"]; "Check Project Status";
+    node [shape = box, href="#get-project"]; "Monitor Project Status";
     node [shape = box, href="#get-resources"]; "Download Output Resources";
 
     "Create Project" -> "Create Resources";
     "Create Resources" -> "Submit Request";
-    "Submit Request" -> "Check Project Status";
-    "Check Project Status" -> "Check Project Status";
-    "Check Project Status" -> "Download Output Resources";
+    "Submit Request" -> "Monitor Project Status";
+    "Monitor Project Status" -> "Monitor Project Status";
+    "Monitor Project Status" -> "Download Output Resources";
 
    }
+
+Monitoring for project status can be performed by polling the `Get Project`_ endpoint, or by registering a callback URL on the project.   This callback will be called when the project reaches completion.   See `Callbacks`_ for further detail.
 
 
 ============
@@ -146,8 +148,8 @@ Project data can be updated using this API method.    Only the fields shown belo
         {
             "id": 1234,
             "name": "Modified Project Name",
-            "description": "Description",
-            "statusCallbackUrl": "http://callback.url"
+            "description": "Modified Description",
+            "statusCallbackUrl": "http://modified.callback.url"
         }
 
 The response will return the modified project data :
@@ -191,13 +193,13 @@ Resources have a **status** field which indicates whether the file content was u
 Resource Types
 -----------------
 
-The Pointivo API handles a defined set of resource types, each given a unique numeric identifier.
+The Pointivo API handles a defined set of resource types, each given a unique identifier.
 
-* **FRAME  - Frame/Image Archive** (zip, rar)
-* **POINT_DENSE - Point Cloud** (ply, las)
-* **CAMERA_VIEWS - Camera View Definitions** (Pix4D, Agisoft)
-* **GEOJSON - GEOJSON format**
-* **DXF - DXF format**
+* **FRAME**  - Frame/Image Archive (zip, rar)
+* **POINT_DENSE** - Point Cloud (ply, las)
+* **CAMERA_VIEWS** - Camera View Definitions (Pix4D, Agisoft)
+* **GEOJSON** - GEOJSON format
+* **DXF** - DXF format
 
 -----------------
 Create Resource
@@ -241,7 +243,7 @@ The response will include the newly created resource, including its assigned id.
 
 The **uploadUrl** field is a temporary URL for uploads.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
 
-The **flowType** field indicates the resource was provided to the API, or produced by the API.   Possible values are **IN** and **OUT** respectively.
+The **flowType** field indicates whether the resource was provided to the API, or produced by the API.   Possible values are **IN** and **OUT** respectively.
 
 -----------------
 Get Resources
