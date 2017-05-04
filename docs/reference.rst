@@ -43,11 +43,11 @@ All responses from the Pointivo API include a common set of fields indicating th
 .. code-block:: javascript
     :caption: API Response
 
-    {
-        "success": true, // indicates success or failure of the request
-        "message": "", // additional detail, if available
-        "data": { } // request-specific response data
-    }
+        {
+            "success": true, // indicates success or failure of the request
+            "message": "", // additional detail, if available
+            "data": { } // request-specific response data
+        }
 
 
 
@@ -79,29 +79,29 @@ The fields shown in the POST call are all optional, but recommended.   If provid
 .. code-block:: javascript
     :caption: API Request
 
-    {
-        "name": "Project Name",
-        "description": "Description"
-        "statusCallbackUrl": "http://callback.url"
-    }
+        {
+            "name": "Project Name",
+            "description": "Description"
+            "statusCallbackUrl": "http://callback.url"
+        }
 
 The response will include the newly created project, including its assigned id.  This project id will be needed for all subsequent API calls which reference this project.
 
 .. code-block:: javascript
     :caption: API Response
 
-    {
-        "success": true,
-        "message": null,
-        "data": {
-            "id": 1234,
-            "name": "Project Name",
-            "description": "Description",
-            "statusCallbackUrl": "http://callback.url",
-            "status": "CREATED",
-            "resourceStatus": "OK"
+        {
+            "success": true,
+            "message": null,
+            "data": {
+                "id": 1234,
+                "name": "Project Name",
+                "description": "Description",
+                "statusCallbackUrl": "http://callback.url",
+                "status": "CREATED",
+                "resourceStatus": "OK"
+            }
         }
-    }
 
 .. _getprojectlabel:
 
@@ -118,18 +118,18 @@ The response will include the current project data :
 .. code-block:: javascript
     :caption: API Response
 
-    {
-        "success": true,
-        "message": null,
-        "data": {
-            "id": 1234,
-            "name": "Project Name",
-            "description": "Description",
-            "statusCallbackUrl": "http://callback.url",
-            "status": "CREATED",
-            "resourceStatus": "OK"
+        {
+            "success": true,
+            "message": null,
+            "data": {
+                "id": 1234,
+                "name": "Project Name",
+                "description": "Description",
+                "statusCallbackUrl": "http://callback.url",
+                "status": "CREATED",
+                "resourceStatus": "OK"
+            }
         }
-    }
 
 
 --------------
@@ -143,28 +143,28 @@ Project data can be updated using this API method.    Only the fields shown belo
 .. code-block:: javascript
     :caption: API Request
 
-    {
-        "id": 1234,
-        "name": "Modified Project Name",
-        "description": "Description",
-        "statusCallbackUrl": "http://callback.url"
-    }
+        {
+            "id": 1234,
+            "name": "Modified Project Name",
+            "description": "Description",
+            "statusCallbackUrl": "http://callback.url"
+        }
 
 The response will return the modified project data :
 
 .. code-block:: javascript
     :caption: API Response
 
-    {
-        "success": true,
-        "message": null,
-        "data": {
-            "id": 1234,
-            "name": "Modified Project Name",
-            "description": "Description",
-            "statusCallbackUrl": "http://callback.url"
+        {
+            "success": true,
+            "message": null,
+            "data": {
+                "id": 1234,
+                "name": "Modified Project Name",
+                "description": "Description",
+                "statusCallbackUrl": "http://callback.url"
+            }
         }
-    }
 
 
 
@@ -212,32 +212,32 @@ The only required field in the create resource endpoint is **resourceType**.
 .. code-block:: javascript
     :caption: API Request
 
-    {
-        "name": "Pointcloud Resource",
-        "description": "Description"
-        "type": "POINT_DENSE" // Point Cloud resource type
-        "metaData": {} // optional resource metadata
-    }
+        {
+            "name": "Pointcloud Resource",
+            "description": "Description"
+            "type": "POINT_DENSE" // Point Cloud resource type
+            "metaData": {} // optional resource metadata
+        }
 
 The response will include the newly created resource, including its assigned id.  This resource id will be needed for all subsequent API calls which reference this resource.
 
 .. code-block:: javascript
     :caption: API Response
 
-    {
-        "success": true,
-        "message": null,
-        "data": {
-            "id": 2345,
-            "name": "Pointcloud Resource",
-            "description": "Description",
-            "type": "POINT_DENSE",
-            "flowType": "IN",
-            "metaData": {},
-            "status": "OK",
-        },
-        "uploadUrl": "https://upload.here"
-    }
+        {
+            "success": true,
+            "message": null,
+            "data": {
+                "id": 2345,
+                "name": "Pointcloud Resource",
+                "description": "Description",
+                "type": "POINT_DENSE",
+                "flowType": "IN",
+                "metaData": {},
+                "status": "OK",
+            },
+            "uploadUrl": "https://upload.here"
+        }
 
 The **uploadUrl** field is a temporary URL for uploads.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
 
@@ -252,37 +252,36 @@ This call returns all resources associated with a project.
 
 **GET** /v2/projects/{projectId}/resources
 
-Response :
 
 .. code-block:: javascript
     :caption: API Response
 
-    {
-        "success": true,
-        "message": null,
-        "data": [
-            {
-                "id": 2345,
-                "name": "Pointcloud Resource",
-                "description": "",
-                "type": "POINT_DENSE",
-                "flowType": "IN",
-                "metaData": {},
-                "status": "OK",
-                "downloadUrl": "https://download.url"
-            },
-            {
-                "id": 2346,
-                "name": "GEOJSON",
-                "description": "",
-                "type": "GEOJSON",
-                "flowType": "OUT",
-                "metaData": {},
-                "status": "OK",
-                "downloadUrl": "https://download.url"
-            }
-        ]
-    }
+        {
+            "success": true,
+            "message": null,
+            "data": [
+                {
+                    "id": 2345,
+                    "name": "Pointcloud Resource",
+                    "description": "",
+                    "type": "POINT_DENSE",
+                    "flowType": "IN",
+                    "metaData": {},
+                    "status": "OK",
+                    "downloadUrl": "https://download.url"
+                },
+                {
+                    "id": 2346,
+                    "name": "GEOJSON",
+                    "description": "",
+                    "type": "GEOJSON",
+                    "flowType": "OUT",
+                    "metaData": {},
+                    "status": "OK",
+                    "downloadUrl": "https://download.url"
+                }
+            ]
+        }
 
 The **downloadUrl** field is a temporary URL provided to download the file content associated with each resource.
 
@@ -304,11 +303,11 @@ The wireframe detection request must include the resource ids for all three reso
 .. code-block:: javascript
     :caption: API Request
 
-    {
-        "frameZipResourceId": 1001,
-        "pointCloudResourceId": 1002,
-        "cameraViewResourceId": 1003
-    }
+        {
+            "frameZipResourceId": 1001,
+            "pointCloudResourceId": 1002,
+            "cameraViewResourceId": 1003
+        }
 
 Once submitted, processing will begin immediately.   Project status can be obtained by querying the `Get Project`_ API endpoint.
 
@@ -321,38 +320,39 @@ Callbacks
 
 If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETED_INITIAL** or **COMPLETED**.   The callback body includes the current project data and a list of resources available for the project :
 
+
 .. code-block:: javascript
     :caption: Callback POST body
 
-    {
-      "project": {
-        "id": 5847,
-        "name": "Project Name",
-        "description": "Project Description",
-        "statusCallbackUrl": "https://callback.url",
-        "resourceStatus": "OK",
-        "status": "COMPLETE_INITIAL"
-      },
-      "resources": [
         {
-          "id": 2345,
-          "name": "Pointcloud Resource",
-          "description": "",
-          "type": "POINT_DENSE",
-          "flowType": "IN",
-          "metaData": {},
-          "status": "OK",
-          "downloadUrl": "https://download.url"
-        },
-        {
-          "id": 2346,
-          "name": "GEOJSON",
-          "description": "",
-          "type": "GEOJSON",
-          "flowType": "OUT",
-          "metaData": {},
-          "status": "OK",
-          "downloadUrl": "https://download.url"
+          "project": {
+            "id": 5847,
+            "name": "Project Name",
+            "description": "Project Description",
+            "statusCallbackUrl": "https://callback.url",
+            "resourceStatus": "OK",
+            "status": "COMPLETE_INITIAL"
+          },
+          "resources": [
+            {
+              "id": 2345,
+              "name": "Pointcloud Resource",
+              "description": "",
+              "type": "POINT_DENSE",
+              "flowType": "IN",
+              "metaData": {},
+              "status": "OK",
+              "downloadUrl": "https://download.url"
+            },
+            {
+              "id": 2346,
+              "name": "GEOJSON",
+              "description": "",
+              "type": "GEOJSON",
+              "flowType": "OUT",
+              "metaData": {},
+              "status": "OK",
+              "downloadUrl": "https://download.url"
+            }
+          ]
         }
-      ]
-    }
