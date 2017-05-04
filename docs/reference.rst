@@ -64,7 +64,7 @@ Projects have a field named **status** that can have one of the following values
 * **CREATED** - Project has been created and is awaiting resources uploads or processing requests
 * **PROCESSING** - Project is processing
 * **COMPLETE_INITIAL** - Project is processing, but initial outputs are available
-* **COMPLETE** - Project is complete, and no further outputs will be generated
+* **COMPLETE_FINAL** - Project is complete, and no further outputs will be generated
 
 Projects also have a field **resourceStatus**, which indicates the most severe problem detected with Resources associated with the Project.   See `Resource Status`_ for further informaiton.
 
