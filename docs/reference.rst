@@ -293,9 +293,9 @@ Wireframe Generation
 
 The Pointivo API supports automatic wireframe detection for structures in point clouds.   Wireframe detection requires that a project have three input resources created and uploaded :
 
-* **1 - Frame/Image Archive** (zip, rar)
-* **12 - Point Cloud** (ply, las)
-* **94 - Camera View Definitions** (Pix4D, Agisoft)
+* **FRAME** - Frame/Image Archive (zip, rar)
+* **POINT_DENSE** - Pointcloud (ply, las)
+* **CAMERA_VIEWS** - Camera View Definitions** (Pix4D, Agisoft)
 
 
 The wireframe detection request must include the resource ids for all three resources.
