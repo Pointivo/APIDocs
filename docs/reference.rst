@@ -4,6 +4,36 @@
 Public API Reference
 ========================================
 
+--------------
+Project Flow
+--------------
+
+Pointivo API interaction will generally follow this sequence :
+
+.. graphviz::
+
+   digraph {
+
+	size="6,4"
+	node [shape = box, href="#create-project"]; "Create Project";
+    node [shape = box, href="#create-resource"]; "Create Resources";
+    node [shape = box, href="#wireframe-generation"]; "Submit Request";
+    node [shape = box, href="#get-project"]; "Check Project Status";
+    node [shape = box, href="#get-resources"]; "Download Output Resources";
+
+    "Create Project" -> "Create Resources";
+    "Create Resources" -> "Submit Request";
+    "Submit Request" -> "Check Project Status";
+    "Check Project Status" -> "Check Project Status";
+    "Check Project Status" -> "Download Output Resources";
+
+   }
+
+
+============
+API Overview
+============
+
 The base URL for all API requests is **https://api.pointivo.com/**
 
 All requests to the Pointivo API must include a request header named **authorization** containing a valid API authorization token.
@@ -18,13 +48,6 @@ All responses from the Pointivo API include a common set of fields indicating th
         "message": "", // additional detail, if available
         "data": { } // request-specific response data
     }
-
-
-.. graphviz::
-
-   digraph {
-      "From" -> "To";
-   }
 
 
 
@@ -170,11 +193,11 @@ Resource Types
 
 The Pointivo API handles a defined set of resource types, each given a unique numeric identifier.
 
-* **1  - Frame/Image Archive** (zip, rar)
-* **12 - Point Cloud** (ply, las)
-* **94 - Camera View Definitions** (Pix4D, Agisoft)
-* **96 - GEOJSON**
-* **97 - DXF**
+* **FRAME  - Frame/Image Archive** (zip, rar)
+* **POINT_DENSE - Point Cloud** (ply, las)
+* **CAMERA_VIEWS - Camera View Definitions** (Pix4D, Agisoft)
+* **GEOJSON - GEOJSON format**
+* **DXF - DXF format**
 
 -----------------
 Create Resource
@@ -192,7 +215,7 @@ The only required field in the create resource endpoint is **resourceType**.
     {
         "name": "Pointcloud Resource",
         "description": "Description"
-        "resourceType": { id: 12 } // Point Cloud resource type
+        "type": "POINT_DENSE" // Point Cloud resource type
         "metaData": {} // optional resource metadata
     }
 
@@ -208,7 +231,7 @@ The response will include the newly created resource, including its assigned id.
             "id": 2345,
             "name": "Pointcloud Resource",
             "description": "Description",
-            "resourceType": { id: 12 },
+            "type": "POINT_DENSE",
             "flowType": "IN",
             "metaData": {},
             "status": "OK",
@@ -242,7 +265,7 @@ Response :
                 "id": 2345,
                 "name": "Pointcloud Resource",
                 "description": "",
-                "resourceType": { id: 12 },
+                "type": "POINT_DENSE",
                 "flowType": "IN",
                 "metaData": {},
                 "status": "OK",
@@ -252,7 +275,7 @@ Response :
                 "id": 2346,
                 "name": "GEOJSON",
                 "description": "",
-                "resourceType": { id: 96 },
+                "type": "GEOJSON",
                 "flowType": "OUT",
                 "metaData": {},
                 "status": "OK",
@@ -312,17 +335,24 @@ If a callback is defined for a project, the callback will be invoked once the pr
       },
       "resources": [
         {
-          "id": 27071,
+          "id": 2345,
+          "name": "Pointcloud Resource",
+          "description": "",
+          "type": "POINT_DENSE",
+          "flowType": "IN",
+          "metaData": {},
+          "status": "OK",
+          "downloadUrl": "https://download.url"
+        },
+        {
+          "id": 2346,
           "name": "GEOJSON",
           "description": "",
-          "size": 32438,
-          "resourceType": {
-            "id": 96,
-            "name": "GEOJSON"
-          },
+          "type": "GEOJSON",
+          "flowType": "OUT",
           "metaData": {},
-          "downloadUrl": "https://resource.download.url",
-          "status": "OK"
+          "status": "OK",
+          "downloadUrl": "https://download.url"
         }
       ]
     }
