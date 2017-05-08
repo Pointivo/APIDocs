@@ -201,6 +201,32 @@ The Pointivo API handles a defined set of resource types, each given a unique id
 * **GEOJSON** - GEOJSON format
 * **DXF** - DXF format
 
+
+Point Clouds
+-------------
+
+Point clouds are supported in ASCII and binary PLY format, and in LAS format.
+
+A region of interest within the point cloud can be specified by providing a **metaData.regionOfInterest** field in the resource object.   The content of this field must be a GEOJSON Polygon or MultiPolygon object :
+
+.. code-block:: javascript
+    :caption: API Request
+
+    {
+      "name": "Pointcloud Resource",
+      "description": "Description",
+      "type": "POINT_DENSE",
+      "metaData": {
+        "regionOfInterest": {
+          "type": "Polygon",
+          "coordinates": [
+            [ [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ], [ 100, 0 ] ]
+          ]
+        }
+      }
+    }
+
+
 -----------------
 Create Resource
 -----------------
