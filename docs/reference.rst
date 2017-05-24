@@ -197,7 +197,7 @@ The Pointivo API handles a defined set of resource types, each given a unique id
 
 * **FRAME**  - Frame/Image Archive (zip, rar)
 * **POINT_DENSE** - Point Cloud (ply, las)
-* **CAMERA_VIEWS** - Camera View Definitions (Pix4D, Agisoft)
+* **CAMERA_VIEWS** - Camera View Definitions (Pointivo, Pix4D, Agisoft)
 * **GEOJSON** - GEOJSON format
 * **DXF** - DXF format
 
