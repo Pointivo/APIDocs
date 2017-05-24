@@ -202,29 +202,29 @@ The Pointivo API handles a defined set of resource types, each given a unique id
 * **DXF** - DXF format
 
 
-Point Clouds
--------------
+.. Point Clouds
+.. -------------
 
-Point clouds are supported in ASCII and binary PLY format, and in LAS format.
+.. Point clouds are supported in ASCII and binary PLY format, and in LAS format.
 
-A region of interest within the point cloud can be specified by providing a **metaData.regionOfInterest** field in the resource object.   The content of this field must be a GEOJSON Polygon or MultiPolygon object :
+.. A region of interest within the point cloud can be specified by providing a **metaData.regionOfInterest** field in the resource object.   The content of this field must be a GEOJSON Polygon or MultiPolygon object :
 
-.. code-block:: javascript
+.. .. code-block:: javascript
     :caption: API Request
 
-    {
-      "name": "Pointcloud Resource",
-      "description": "Description",
-      "type": "POINT_DENSE",
-      "metaData": {
-        "regionOfInterest": {
-          "type": "Polygon",
-          "coordinates": [
-            [ [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ], [ 100, 0 ] ]
-          ]
-        }
-      }
-    }
+..    {
+..      "name": "Pointcloud Resource",
+..      "description": "Description",
+..      "type": "POINT_DENSE",
+..      "metaData": {
+..        "regionOfInterest": {
+..          "type": "Polygon",
+..          "coordinates": [
+..            [ [ 100, 0 ], [ 101, 0 ], [ 101, 1 ], [ 100, 1 ], [ 100, 0 ] ]
+..          ]
+..        }
+..      }
+..    }
 
 
 -----------------
@@ -334,14 +334,11 @@ To trigger wireframe detection, submit a processing request specifying at a mini
 
         {
             "outputRequests": [
-                { "resourceType": "WIREFRAME" },
-                { "resourceType": "GEOJSON" },
-                { "resourceType": "DXF" },
+                { "resourceType": "WIREFRAME" }
             ]
         }
 
 Once submitted, processing will begin immediately.   Processing status can be obtained by querying the `Get Project`_ API endpoint.
-
 
 
 
