@@ -64,7 +64,7 @@ Projects have a field named **status** that can have one of the following values
 * **CREATED** - Project has been created and is awaiting resources uploads or processing requests
 * **PROCESSING** - Project is processing
 * **COMPLETE_INITIAL** - Project is processing, but initial outputs are available
-* **COMPLETE_FINAL** - Project is complete, and no further outputs will be generated
+* **COMPLETE_FINAL** - Project is complete, all outputs are available, and no further outputs will be generated
 
 Projects also have a field **resourceStatus**, which indicates the most severe problem detected with Resources associated with the Project.   See `Resource Status`_ for further informaiton.
 
@@ -197,7 +197,7 @@ The Pointivo API handles a defined set of resource types, each given a unique id
 
 * **FRAME**  - Frame/Image Archive (zip, rar)
 * **POINT_DENSE** - Point Cloud (ply, las)
-* **CAMERA_VIEWS** - Camera View Definitions (Pix4D, Agisoft)
+* **CAMERA_VIEWS** - Camera View Definitions (Pointivo, Pix4D, Agisoft)
 * **GEOJSON** - GEOJSON format
 * **DXF** - DXF format
 
