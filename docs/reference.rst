@@ -233,7 +233,7 @@ Create Resource
 
 This call creates a new resource within the Pointivo API.
 
-The only required field in the create resource endpoint is **resourceType**.
+The only required fields in the create resource endpoint are **resourceType** and **filename**.
 
 **POST** /v2/projects/{projectId}/resources
 
@@ -243,7 +243,8 @@ The only required field in the create resource endpoint is **resourceType**.
         {
             "name": "Pointcloud Resource",
             "description": "Description"
-            "type": "POINT_DENSE" // Point Cloud resource type
+            "type": "POINT_DENSE" // Point Cloud resource type,
+            "filename": "pointDense.ply" // Filename with extension
             "metadata": {} // optional resource metadata
         }
 
@@ -260,6 +261,7 @@ The response will include the newly created resource, including its assigned id.
                 "name": "Pointcloud Resource",
                 "description": "Description",
                 "type": "POINT_DENSE",
+                "filename": "pointDense.ply",
                 "flowType": "IN",
                 "metadata": {},
                 "status": "OK",
@@ -293,6 +295,7 @@ This call returns all resources associated with a project.
                     "name": "Pointcloud Resource",
                     "description": "",
                     "type": "POINT_DENSE",
+                    "filename": "pointDense.ply",
                     "flowType": "IN",
                     "metadata": {},
                     "status": "OK",
@@ -303,6 +306,7 @@ This call returns all resources associated with a project.
                     "name": "GEOJSON",
                     "description": "",
                     "type": "GEOJSON",
+                    "filename": "wireframe.geojson",
                     "flowType": "OUT",
                     "metadata": {},
                     "status": "OK",
@@ -367,6 +371,7 @@ If a callback is defined for a project, the callback will be invoked once the pr
               "name": "Pointcloud Resource",
               "description": "",
               "type": "POINT_DENSE",
+              "filename": "pointDense.ply",
               "flowType": "IN",
               "metadata": {},
               "status": "OK",
@@ -377,6 +382,7 @@ If a callback is defined for a project, the callback will be invoked once the pr
               "name": "GEOJSON",
               "description": "",
               "type": "GEOJSON",
+              "filename": "wireframe.geojson",
               "flowType": "OUT",
               "metadata": {},
               "status": "OK",
