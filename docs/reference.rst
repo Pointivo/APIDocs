@@ -163,8 +163,8 @@ The response will return the modified project data :
             "data": {
                 "id": 1234,
                 "name": "Modified Project Name",
-                "description": "Description",
-                "statusCallbackUrl": "http://callback.url"
+                "description": "Modified Description",
+                "statusCallbackUrl": "http://modified.callback.url"
             }
         }
 
@@ -346,7 +346,7 @@ Once submitted, processing will begin immediately.   Processing status can be ob
 Callbacks
 =================
 
-If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETED_INITIAL** or **COMPLETED**.   The callback body includes the current project data and a list of resources available for the project :
+If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETED_INITIAL** or **COMPLETED_FINAL**.   The callback body includes the current project data and a list of resources available for the project :
 
 
 .. code-block:: javascript
