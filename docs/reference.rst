@@ -74,7 +74,7 @@ Create Project
 
 This call creates a new project within the Pointivo API.
 
-The fields shown in the POST call are all optional, but recommended.   If provided the **statusCallbackUrl** will be called by the Pointivo API when the project transitions into a completed state.   Currently supported callback mechanisms are HTTP/HTTPS urls, and Amazon SNS arns.
+The fields shown in the POST call are all optional, but recommended.   If provided the **statusCallbackUrl** will be called by the Pointivo API when the project transitions into a completed state.   Currently supported callback mechanisms are HTTP/HTTPS URLs, and Amazon SNS ARNs.
 
 **POST** /v2/projects
 
