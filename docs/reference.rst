@@ -38,7 +38,7 @@ API Overview
 
 The base URL for all API requests is **https://api.pointivo.com/**
 
-All requests to the Pointivo API must include a request header named **authorization** containing a valid API authorization token.
+All requests to the Pointivo API must include a request header named **authorization** containing a valid API authorization token.   A **content-type** request header must also be set, with value **application/json**.
 
 All responses from the Pointivo API include a common set of fields indicating the status and success of the request:
 
@@ -207,7 +207,7 @@ The Pointivo API handles a defined set of resource types, each given a unique id
 
 .. Point clouds are supported in ASCII and binary PLY format, and in LAS format.
 
-.. A region of interest within the point cloud can be specified by providing a **metaData.regionOfInterest** field in the resource object.   The content of this field must be a GEOJSON Polygon or MultiPolygon object :
+.. A region of interest within the point cloud can be specified by providing a **metadata.regionOfInterest** field in the resource object.   The content of this field must be a GEOJSON Polygon or MultiPolygon object :
 
 .. .. code-block:: javascript
     :caption: API Request
@@ -216,7 +216,7 @@ The Pointivo API handles a defined set of resource types, each given a unique id
 ..      "name": "Pointcloud Resource",
 ..      "description": "Description",
 ..      "type": "POINT_DENSE",
-..      "metaData": {
+..      "metadata": {
 ..        "regionOfInterest": {
 ..          "type": "Polygon",
 ..          "coordinates": [
@@ -244,7 +244,7 @@ The only required field in the create resource endpoint is **resourceType**.
             "name": "Pointcloud Resource",
             "description": "Description"
             "type": "POINT_DENSE" // Point Cloud resource type
-            "metaData": {} // optional resource metadata
+            "metadata": {} // optional resource metadata
         }
 
 The response will include the newly created resource, including its assigned id.  This resource id will be needed for all subsequent API calls which reference this resource.
@@ -261,7 +261,7 @@ The response will include the newly created resource, including its assigned id.
                 "description": "Description",
                 "type": "POINT_DENSE",
                 "flowType": "IN",
-                "metaData": {},
+                "metadata": {},
                 "status": "OK",
             },
             "uploadUrl": "https://upload.here"
@@ -294,7 +294,7 @@ This call returns all resources associated with a project.
                     "description": "",
                     "type": "POINT_DENSE",
                     "flowType": "IN",
-                    "metaData": {},
+                    "metadata": {},
                     "status": "OK",
                     "downloadUrl": "https://download.url"
                 },
@@ -304,7 +304,7 @@ This call returns all resources associated with a project.
                     "description": "",
                     "type": "GEOJSON",
                     "flowType": "OUT",
-                    "metaData": {},
+                    "metadata": {},
                     "status": "OK",
                     "downloadUrl": "https://download.url"
                 }
@@ -368,7 +368,7 @@ If a callback is defined for a project, the callback will be invoked once the pr
               "description": "",
               "type": "POINT_DENSE",
               "flowType": "IN",
-              "metaData": {},
+              "metadata": {},
               "status": "OK",
               "downloadUrl": "https://download.url"
             },
@@ -378,7 +378,7 @@ If a callback is defined for a project, the callback will be invoked once the pr
               "description": "",
               "type": "GEOJSON",
               "flowType": "OUT",
-              "metaData": {},
+              "metadata": {},
               "status": "OK",
               "downloadUrl": "https://download.url"
             }
