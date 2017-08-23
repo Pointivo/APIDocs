@@ -169,6 +169,43 @@ The response will return the modified project data :
         }
 
 
+----------------------
+Region of Interest
+----------------------
+
+A region of interest can be specified for a project.   If provided, any area outside the region will be ignored during processing.
+
+The region of interest is defined as a 2D polygon.   Optional bottom and top values can be provided, which will cap the 3D volume defined by the extruded 2D polygon.
+
+**PUT** /v2/projects/{projectId}/regionOfInterest
+
+.. code-block:: javascript
+    :caption: API Request
+
+        {
+            "bottom": 0,
+            "top": 10,
+            "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 2 ] ]
+        }
+
+
+
+The region of interest for a project can be retrieved via the following call :
+
+**GET** /v2/projects/{projectId}/regionOfInterest
+
+.. code-block:: javascript
+    :caption: API Response
+
+        {
+            "success": true,
+            "data": {
+                "bottom": 0,
+                "top": 10,
+                "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 2 ] ]
+            }
+        }
+
 
 
 =================
