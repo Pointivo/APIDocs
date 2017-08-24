@@ -187,7 +187,7 @@ A region of interest with an empty polygon array will be ignored during processi
         {
             "bottom": 0,
             "top": 10,
-            "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 2 ] ]
+            "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 0 ] ]
         }
 
 
@@ -204,7 +204,7 @@ The region of interest for a project can be retrieved via the following call :
             "data": {
                 "bottom": 0,
                 "top": 10,
-                "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 2 ] ]
+                "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 0 ] ]
             }
         }
 
