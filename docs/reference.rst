@@ -175,7 +175,7 @@ Region of Interest
 
 A region of interest can be specified for a project.   If provided, any area outside the region will be ignored during processing.
 
-The region of interest is defined as a 2D polygon.   Bottom and top values can be provided, which will cap the 3D volume defined by the extruded 2D polygon.   If bottom and top are set to the same value then the region of interest will not be capped.
+The region of interest is defined as a `GeoJson-style polygon <https://tools.ietf.org/html/rfc7946#section-3.1.6>`_.   Bottom and top values can be provided, which will cap the 3D volume defined by the extruded 2D polygon.   If bottom and top are set to the same value then the region of interest will not be capped.
 
 A region of interest with an empty polygon array will be ignored during processing, effectively disabling the function.
 
@@ -187,7 +187,10 @@ A region of interest with an empty polygon array will be ignored during processi
         {
             "bottom": 0,
             "top": 10,
-            "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 0 ] ]
+            "polygon": [
+                    [ [ 0, 0 ], [ 0, 4 ], [ 4, 4 ], [ 4, 0 ], [ 0, 0 ] ],
+                    [ [ 1, 1 ], [ 1, 3 ], [ 3, 3 ], [ 3, 1 ], [ 1, 1 ] ]
+            ]
         }
 
 
@@ -204,7 +207,10 @@ The region of interest for a project can be retrieved via the following call :
             "data": {
                 "bottom": 0,
                 "top": 10,
-                "polygon": [ [ 0, 0 ], [ 1, 1 ], [ 2, 0 ] ]
+                "polygon": [
+                        [ [ 0, 0 ], [ 0, 4 ], [ 4, 4 ], [ 4, 0 ], [ 0, 0 ] ],
+                        [ [ 1, 1 ], [ 1, 3 ], [ 3, 3 ], [ 3, 1 ], [ 1, 1 ] ]
+                ]
             }
         }
 
