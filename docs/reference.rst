@@ -406,7 +406,7 @@ Once submitted, processing will begin immediately.   Processing status can be ob
 Callbacks
 =================
 
-If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETED_INITIAL** or **COMPLETED_FINAL**.   The callback body includes the current project data and a list of resources available for the project :
+If a callback is defined for a project, the callback will be invoked once the project reaches a state of **COMPLETE_INITIAL** or **COMPLETE_FINAL**.   The callback body includes the current project data and a list of resources available for the project :
 
 
 .. code-block:: javascript
