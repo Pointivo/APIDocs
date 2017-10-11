@@ -175,7 +175,7 @@ Region of Interest
 
 A region of interest can be specified for a project.   If provided, any area outside the region will be ignored during processing.
 
-The region of interest is defined as a `GeoJSON-style polygon <https://tools.ietf.org/html/rfc7946#section-3.1.6>`_.   Bottom and top values can be provided, which will cap the 3D volume defined by the extruded 2D polygon.   If bottom and top are set to the same value then the region of interest will not be capped.
+The region of interest is defined as an array of `GeoJSON-style polygons <https://tools.ietf.org/html/rfc7946#section-3.1.6>`_.   Bottom and top values can be provided, which will cap the 3D volume defined by the extruded 2D polygon.   If bottom and top are set to the same value then the region of interest will not be capped.
 
 A region of interest with an empty polygon array will be ignored during processing, effectively disabling the function.
 
@@ -187,9 +187,11 @@ A region of interest with an empty polygon array will be ignored during processi
         {
             "bottom": 0,
             "top": 10,
-            "polygon": [
+            "polygons": [
+                [
                     [ [ 0, 0 ], [ 0, 4 ], [ 4, 4 ], [ 4, 0 ], [ 0, 0 ] ],
                     [ [ 1, 1 ], [ 1, 3 ], [ 3, 3 ], [ 3, 1 ], [ 1, 1 ] ]
+                ]
             ]
         }
 
@@ -208,8 +210,10 @@ The region of interest for a project can be retrieved via the following call :
                 "bottom": 0,
                 "top": 10,
                 "polygon": [
+                    [
                         [ [ 0, 0 ], [ 0, 4 ], [ 4, 4 ], [ 4, 0 ], [ 0, 0 ] ],
                         [ [ 1, 1 ], [ 1, 3 ], [ 3, 3 ], [ 3, 1 ], [ 1, 1 ] ]
+                    ]
                 ]
             }
         }
@@ -372,9 +376,15 @@ Roof structure wireframe detection requires that a project have three input reso
 
 * **FRAME** - Frame/Image Archive (zip, rar)
 * **POINT_DENSE** - Pointcloud (ply, las)
-* **CAMERA_VIEWS** - Camera View Definitions** (Pix4D, Agisoft)
+* **CAMERA_VIEWS** - Camera View Definitions (Pix4D, Agisoft)
 
-To trigger wireframe detection, submit a processing request specifying at a minimum the **WIREFRAME** resource type in the outputRequests list, as shown below.
+The process request body must include an array field **outputRequests**, containing a list of the desired outputs for the project.
+
+Currently supported output resource types include the following :
+
+* **GEOJSON** - GeoJSON representation of the scene
+* **DXF** - AutoDesk DXF file format
+* **DATA_PACKAGE** - Raw data and image bundle of resources associated with the scene
 
 **POST** /v2/projects/{projectId}/processRequest
 
@@ -383,7 +393,8 @@ To trigger wireframe detection, submit a processing request specifying at a mini
 
         {
             "outputRequests": [
-                { "resourceType": "WIREFRAME" }
+                { "resourceType": "GEOJSON" },
+                { "resourceType": "DATA_PACKAGE" }
             ]
         }
 
