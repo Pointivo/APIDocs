@@ -103,7 +103,8 @@ The response will include the newly created project, including its assigned id. 
                 "description": "Description",
                 "statusCallbackUrl": "http://callback.url",
                 "status": "CREATED",
-                "resourceStatus": "OK"
+                "resourceStatus": "OK",
+                "measurementUnit": "M"
             }
         }
 
@@ -130,7 +131,8 @@ The response will include the current project data :
                 "description": "Description",
                 "statusCallbackUrl": "http://callback.url",
                 "status": "CREATED",
-                "resourceStatus": "OK"
+                "resourceStatus": "OK",
+                "measurementUnit": "M"
             }
         }
 
