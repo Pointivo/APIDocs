@@ -68,6 +68,8 @@ Projects have a field named **status** that can have one of the following values
 
 Projects also have a field **resourceStatus**, which indicates the most severe problem detected with Resources associated with the Project.   See `Resource Status`_ for further informaiton.
 
+The **measurementUnit** field can be set to control the units used in generated outputs for the project.    Valid values are **M** for meters (default), **FT** for feet, and **FFI** for feet/fractional inches.
+
 --------------
 Create Project
 --------------
@@ -83,8 +85,9 @@ The fields shown in the POST call are all optional, but recommended.   If provid
 
         {
             "name": "Project Name",
-            "description": "Description"
-            "statusCallbackUrl": "http://callback.url"
+            "description": "Description",
+            "statusCallbackUrl": "http://callback.url",
+            "measurementUnit": "M"
         }
 
 The response will include the newly created project, including its assigned id.  This project id will be needed for all subsequent API calls which reference this project.
@@ -94,7 +97,6 @@ The response will include the newly created project, including its assigned id. 
 
         {
             "success": true,
-            "message": null,
             "data": {
                 "id": 1234,
                 "name": "Project Name",
@@ -122,7 +124,6 @@ The response will include the current project data :
 
         {
             "success": true,
-            "message": null,
             "data": {
                 "id": 1234,
                 "name": "Project Name",
@@ -149,7 +150,8 @@ Project data can be updated using this API method.    Only the fields shown belo
             "id": 1234,
             "name": "Modified Project Name",
             "description": "Modified Description",
-            "statusCallbackUrl": "http://modified.callback.url"
+            "statusCallbackUrl": "http://modified.callback.url",
+            "measurementUnit": "FT"
         }
 
 The response will return the modified project data :
@@ -159,12 +161,12 @@ The response will return the modified project data :
 
         {
             "success": true,
-            "message": null,
             "data": {
                 "id": 1234,
                 "name": "Modified Project Name",
                 "description": "Modified Description",
-                "statusCallbackUrl": "http://modified.callback.url"
+                "statusCallbackUrl": "http://modified.callback.url",
+                "measurementUnit": "FT"
             }
         }
 
@@ -247,6 +249,7 @@ The Pointivo API handles a defined set of resource types, each given a unique id
 * **FRAME**  - Frame/Image Archive (zip, rar)
 * **POINT_DENSE** - Point Cloud (ply, las)
 * **CAMERA_VIEWS** - Camera View Definitions (Pointivo, Pix4D, Agisoft)
+* **ORTHO_MOSAIC** - Orthomosaic image
 * **GEOJSON** - GEOJSON format
 * **DXF** - DXF format
 
@@ -282,7 +285,7 @@ Create Resource
 
 This call creates a new resource within the Pointivo API.
 
-The only required fields in the create resource endpoint are **resourceType** and **filename**.
+The only required fields in the create resource endpoint are **type** and **filename**.
 
 **POST** /v2/projects/{projectId}/resources
 
@@ -304,8 +307,7 @@ The response will include the newly created resource, including its assigned id.
 
         {
             "success": true,
-            "message": null,
-            "data": {
+            "projectResource": {
                 "id": 2345,
                 "name": "Pointcloud Resource",
                 "description": "Description",
@@ -315,10 +317,16 @@ The response will include the newly created resource, including its assigned id.
                 "metadata": {},
                 "status": "OK",
             },
-            "uploadUrl": "https://upload.here"
+            "uploadInfo": {
+                "uploadUrl": "https://pointivo-projects.s3.amazonaws.com/1234/in/pointDense.ply?...",
+                "key": "1234/in/pointDense.ply",
+                "bucket": "pointivo-projects"
+            }
         }
 
-The **uploadUrl** field is a temporary URL for uploads.   It is to this URL that the file content associated with this resource should be uploaded to, via a POST operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
+The **uploadUrl** field is a temporary URL for uploads.   It is to this URL that the file content associated with this resource should be uploaded to, via a PUT operation.  Further detail on how to perform this upload is provided `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/PresignedUrlUploadObject.html>`_.
+
+Alternatively, resource content can be uploaded using the AWS SDK, which supports > 5GB file sizes and increased performance.    The bucket name and object key for AWS SDK uploads are provided in the **uploadInfo** part of the response.   AWS SDK credentials can be obtained through the `AWS Credentials`_ API call.
 
 The **flowType** field indicates whether the resource was provided to the API, or produced by the API.   Possible values are **IN** and **OUT** respectively.
 
@@ -337,7 +345,6 @@ This call returns all resources associated with a project.
 
         {
             "success": true,
-            "message": null,
             "data": [
                 {
                     "id": 2345,
@@ -365,6 +372,32 @@ This call returns all resources associated with a project.
         }
 
 The **downloadUrl** field is a temporary URL provided to download the file content associated with each resource.
+
+
+-----------------
+AWS Credentials
+-----------------
+
+Temporary AWS credentials for project resource S3 uploads can be obtained through the following API call :
+
+**GET** /v2/projects/{projectId}/credentials
+
+
+.. code-block:: javascript
+    :caption: API Response
+
+            {
+                "success": true,
+                "accessKeyId": "ASIAXXXXXXXX",
+                "secretAccessKey": "HKbDrGS+T1OQt4eCa5roRqhg9lcgyFn2jNgx2Z6b",
+                "sessionToken": "FQoDYXdzEBkaDLBjiOKQlaIFAQ2XiiK8ArQqN9D",
+                "expiration": 1513098783000
+            }
+
+
+These credentials can then be used with the Amazon AWS SDK to upload file content to the S3 locations provided in `Create Resource`_ API call responses.   The AWS SDK must be used if file sizes exceed 5GB.    The AWS SDK may also achieve faster transfer rates through its use of multi-part uploads.
+
+AWS documentation for S3 file uploads can be found `here <http://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html>`_.
 
 ====================
 Process Requests
