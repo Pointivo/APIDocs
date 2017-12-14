@@ -52,6 +52,7 @@ All responses from the Pointivo API include a common set of fields indicating th
         }
 
 
+A working sample Pointivo API integration is provided  `here <apiclient.html>`_.
 
 =================
 Projects
