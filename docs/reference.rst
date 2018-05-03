@@ -434,13 +434,13 @@ Temporary AWS credentials for project resource S3 uploads can be obtained throug
 .. code-block:: javascript
     :caption: API Response
 
-            {
-                "success": true,
-                "accessKeyId": "ASIAXXXXXXXX",
-                "secretAccessKey": "HKbDrGS+T1OQt4eCa5roRqhg9lcgyFn2jNgx2Z6b",
-                "sessionToken": "FQoDYXdzEBkaDLBjiOKQlaIFAQ2XiiK8ArQqN9D",
-                "expiration": 1513098783000
-            }
+	{
+		"success": true,
+		"accessKeyId": "ASIAXXXXXXXX",
+		"secretAccessKey": "HKbDrGS+T1OQt4eCa5roRqhg9lcgyFn2jNgx2Z6b",
+		"sessionToken": "FQoDYXdzEBkaDLBjiOKQlaIFAQ2XiiK8ArQqN9D",
+		"expiration": 1513098783000
+	}
 
 
 These credentials can then be used with the Amazon AWS SDK to upload file content to the S3 locations provided in `Create Resource`_ API call responses.   The AWS SDK must be used if file sizes exceed 5GB.    The AWS SDK may also achieve faster transfer rates through its use of multi-part uploads.
@@ -494,7 +494,7 @@ If a callback is defined for a project, the callback will be invoked once the pr
     :caption: Callback POST body
 
 	{
-		"project": {
+	  "project": {
 		"id": 5847,
 		"name": "Project Name",
 		"description": "Project Description",
