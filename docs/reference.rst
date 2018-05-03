@@ -96,18 +96,20 @@ The response will include the newly created project, including its assigned id. 
 .. code-block:: javascript
     :caption: API Response
 
-        {
-            "success": true,
-            "data": {
-                "id": 1234,
-                "name": "Project Name",
-                "description": "Description",
-                "statusCallbackUrl": "http://callback.url",
-                "status": "CREATED",
-                "resourceStatus": "OK",
-                "measurementUnit": "M"
-            }
-        }
+	{
+		"success": true,
+		"data": {
+			"id": 1234,
+			"name": "Project Name",
+			"description": "Description",
+			"statusCallbackUrl": "http://callback.url",
+			"status": "CREATED",
+			"resourceStatus": "OK",
+			"measurementUnit": "M",
+			"projectIssues": [],
+			"externalId": null
+		}
+	}
 
 .. _getprojectlabel:
 
@@ -124,18 +126,20 @@ The response will include the current project data :
 .. code-block:: javascript
     :caption: API Response
 
-        {
-            "success": true,
-            "data": {
-                "id": 1234,
-                "name": "Project Name",
-                "description": "Description",
-                "statusCallbackUrl": "http://callback.url",
-                "status": "CREATED",
-                "resourceStatus": "OK",
-                "measurementUnit": "M"
-            }
-        }
+	{
+		"success": true,
+		"data": {
+			"id": 1234,
+			"name": "Project Name",
+			"description": "Description",
+			"statusCallbackUrl": "http://callback.url",
+			"status": "CREATED",
+			"resourceStatus": "OK",
+			"measurementUnit": "M",
+			"projectIssues": [],
+			"externalId": null
+		}
+	}
 
 
 --------------
@@ -162,21 +166,62 @@ The response will return the modified project data :
 .. code-block:: javascript
     :caption: API Response
 
-        {
-            "success": true,
-            "data": {
-                "id": 1234,
-                "name": "Modified Project Name",
-                "description": "Modified Description",
-                "statusCallbackUrl": "http://modified.callback.url",
-                "measurementUnit": "FT"
-            }
-        }
+	{
+		"success": true,
+		"data": {
+			"id": 1234,
+			"name": "Modified Project Name",
+			"description": "Modified Description",
+			"statusCallbackUrl": "http://modified.callback.url",
+			"measurementUnit": "FT",
+			"externalId": null
+		}
+	}
+
+---------------
+Project Issues
+---------------
+
+If **resourceStatus** is not OK, the response could include one or more **projectIssues** which describe problems with one of the resources or overall project.  The existence of project issues typically reduces output quality and implies a loss of accuracy.
+
+The most common issues which are currently detected, can be classified into the following categories :
+
+* **REPROJECTION_ERROR** - One or more images show reprojection error. This is an indication of error in aligning cameras during the reconstruciton process.
+* **NOISY_POINTCLOUD** - Point cloud structures are not crisp, edges/corners are not clear
+* **BROKEN_POINTCLOUD** - Point cloud structure is correct, buy missing portions. This if typically caused by occlusion like tree covergae or lack of enough image overlap.
+* **WRONG_ROI** - ROI is specified, but structure unclear or not complete
+* **BLURRY_IMAGES** - One or more images have blurriness
+* **IMAGE_ILLUMINATION** - One or more images were over or underexposured, typically due to very bright scene, glare, or very dark scene or surfaces. This could be also due to shadows.
+* **OCCLUSION** - Part of the structure was occluded and could not be scene in images or point cloud.  Structure was estimated. Typically due to trees or overhangs.
+* **INDETERMINATE_ROI** - ROI not clear, either because no ROI speificed or more than one significant structure included in the ROI.
+* **UNSUPPORTED_GEOMETRY** - Part of the structure cannot be represented, often because cononical or curved structure.
+* **LOW_POINT_CLOUD_DENSITY** - Point cloud density of structure is below recommended levels (2,500 point per square meter)
+* **DEFECTIVE_RECONSTRUCTION** - Project not processible because of partial/complete wrong image alignment. The 3D reconstruction (i.e., point cloud) in this case is not geometrically sound.
+* **LARGE SSD** - Pixel size on structure is large, accuracy might not meet expectations, often because camera too far from structure or use of low resolution camera.
+* **SMOOTHED_POINT_CLOUD** - Point cloud does not have crisp edges, surfaces are blended, often a results of meshing.
+
+.. code-block:: javascript
+    :caption: Example
+
+	{
+		"success": true,
+		"data": {
+			"id": 1234,
+			"name": "Project Name",
+			"description": "Description",
+			"statusCallbackUrl": "http://callback.url",
+			"status": "CREATED",
+			"resourceStatus": "OK",
+			"measurementUnit": "M",
+			"projectIssues": ["NOISY_POINTCLOUD", "WRONG_ROI"],
+			"externalId": null
+		}
+	}
 
 
-----------------------
-Region of Interest
-----------------------
+-------------------------
+Region of Interest  (ROI)
+-------------------------
 
 A region of interest can be specified for a project.   If provided, any area outside the region will be ignored during processing.
 
@@ -448,37 +493,40 @@ If a callback is defined for a project, the callback will be invoked once the pr
 .. code-block:: javascript
     :caption: Callback POST body
 
-        {
-          "project": {
-            "id": 5847,
-            "name": "Project Name",
-            "description": "Project Description",
-            "statusCallbackUrl": "https://callback.url",
-            "resourceStatus": "OK",
-            "status": "COMPLETE_INITIAL"
-          },
-          "resources": [
-            {
-              "id": 2345,
-              "name": "Pointcloud Resource",
-              "description": "",
-              "type": "POINT_DENSE",
-              "filename": "pointDense.ply",
-              "flowType": "IN",
-              "metadata": {},
-              "status": "OK",
-              "downloadUrl": "https://download.url"
-            },
-            {
-              "id": 2346,
-              "name": "GEOJSON",
-              "description": "",
-              "type": "GEOJSON",
-              "filename": "wireframe.geojson",
-              "flowType": "OUT",
-              "metadata": {},
-              "status": "OK",
-              "downloadUrl": "https://download.url"
-            }
-          ]
-        }
+	{
+		"project": {
+		"id": 5847,
+		"name": "Project Name",
+		"description": "Project Description",
+		"statusCallbackUrl": "https://callback.url",
+		"resourceStatus": "OK",
+		"status": "COMPLETE_INITIAL",
+		"measurementUnit": "M",
+		"projectIssues": [],
+		"externalId": null
+	  },
+	  "resources": [
+		{
+		  "id": 2345,
+		  "name": "Pointcloud Resource",
+		  "description": "",
+		  "type": "POINT_DENSE",
+		  "filename": "pointDense.ply",
+		  "flowType": "IN",
+		  "metadata": {},
+		  "status": "OK",
+		  "downloadUrl": "https://download.url"
+		},
+		{
+		  "id": 2346,
+		  "name": "GEOJSON",
+		  "description": "",
+		  "type": "GEOJSON",
+		  "filename": "wireframe.geojson",
+		  "flowType": "OUT",
+		  "metadata": {},
+		  "status": "OK",
+		  "downloadUrl": "https://download.url"
+		}
+	  ]
+	}
