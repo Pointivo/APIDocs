@@ -237,12 +237,12 @@ A region of interest with an empty polygon array will be ignored during processi
         {
             "bottom": 0,
             "top": 10,
-            "polygons": [
-                [
-                    [ [ 0, 0 ], [ 0, 4 ], [ 4, 4 ], [ 4, 0 ], [ 0, 0 ] ],
-                    [ [ 1, 1 ], [ 1, 3 ], [ 3, 3 ], [ 3, 1 ], [ 1, 1 ] ]
-                ]
-            ]
+            "polygons": [ // start array of GeoJSON polygon
+                [ // start GeoJSON polygon
+                    [ [ 0, 0 ], [ 0, 4 ], [ 4, 4 ], [ 4, 0 ], [ 0, 0 ] ], // outer ring
+                    [ [ 1, 1 ], [ 1, 3 ], [ 3, 3 ], [ 3, 1 ], [ 1, 1 ] ] // optional inner ring(s)
+                ] // end GeoJSON polygon
+            ] // end array of GeJSON polygon
         }
 
 
