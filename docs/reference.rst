@@ -225,7 +225,7 @@ Region of Interest  (ROI)
 
 A region of interest can be specified for a project.   If provided, any area outside the region will be ignored during processing.
 
-The region of interest is defined as an array of `GeoJSON-style polygons <https://tools.ietf.org/html/rfc7946#section-3.1.6>`_.   Bottom and top values can be provided, which will cap the 3D volume defined by the extruded 2D polygon.   If bottom and top are set to the same value then the region of interest will not be capped.
+The region of interest is defined as an array of `GeoJSON-style polygons <https://tools.ietf.org/html/rfc7946#section-3.1.6>`_, expressed in the EPSG:3857/Web Mercator coordinate system.   Bottom and top values can be provided, which will cap the 3D volume defined by the extruded 2D polygon.   If bottom and top are set to the same value then the region of interest will not be capped.
 
 A region of interest with an empty polygon array will be ignored during processing, effectively disabling the function.
 
